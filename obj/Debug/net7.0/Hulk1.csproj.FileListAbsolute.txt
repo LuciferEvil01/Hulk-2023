@@ -1,0 +1,15 @@
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/bin/Debug/net7.0/Hulk1
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/bin/Debug/net7.0/Hulk1.deps.json
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/bin/Debug/net7.0/Hulk1.runtimeconfig.json
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/bin/Debug/net7.0/Hulk1.dll
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/bin/Debug/net7.0/Hulk1.pdb
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/Debug/net7.0/Hulk1.csproj.AssemblyReference.cache
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/Debug/net7.0/Hulk1.GeneratedMSBuildEditorConfig.editorconfig
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/Debug/net7.0/Hulk1.AssemblyInfoInputs.cache
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/Debug/net7.0/Hulk1.AssemblyInfo.cs
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/Debug/net7.0/Hulk1.csproj.CoreCompileInputs.cache
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/Debug/net7.0/Hulk1.dll
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/Debug/net7.0/refint/Hulk1.dll
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/Debug/net7.0/Hulk1.pdb
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/Debug/net7.0/Hulk1.genruntimeconfig.cache
+/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/Debug/net7.0/ref/Hulk1.dll

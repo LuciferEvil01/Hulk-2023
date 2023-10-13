@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/Hulk1.csproj": {}
+  },
+  "projects": {
+    "/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/Hulk1.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/Hulk1.csproj",
+        "projectName": "Hulk1",
+        "projectPath": "/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/Hulk1.csproj",
+        "packagesPath": "/home/oem/.nuget/packages/",
+        "outputPath": "/home/oem/Documentos/Universidad/Programacion/Proyectos/1ER AÑO Remake/Hulk1/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/oem/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.111/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
