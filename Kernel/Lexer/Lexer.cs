@@ -5,7 +5,7 @@ public class Lexer
     List<string> NumericOperator{get;set;}
     List<string> Keywords{get;set;}
     TokenReader reader{get;}
-    List<CompilingBugs> Bugs{get;set;}
+    public List<CompilingBugs> Bugs{get;set;}
     
     public Lexer(string code)
     {
@@ -19,7 +19,6 @@ public class Lexer
      Keywords        = new List<string>();
      Keywords        = GetKeyWords(Keywords);
      Bugs            = new List<CompilingBugs>();
-  
 
     }
     public IEnumerable<Token> GetTokens
@@ -38,18 +37,21 @@ public class Lexer
                 {
                     if (Keywords.Contains(value))
                         tokens.Add(new Token(TokenType.Keyword, value));
-                    else if(reader.ContinuesWith("(")|| reader.ContinuesWith("=") || reader.ContinuesWith(" "))
+                    else 
                         tokens.Add(new Token(TokenType.Variable, value));
-                    
-                    else tokens.Add(new Token(TokenType.Parameter,value));
-                    continue;
+                    // if(reader.ContinuesWith("(")|| reader.ContinuesWith("=") || reader.ContinuesWith(" "))
+                    // else tokens.Add(new Token(TokenType.Parameter,value));
+                    //
+                     continue;
                 }
 
                 if (reader.ReadNumber(out value))
                 {
                     double d;
                     if (!double.TryParse(value, out d))
-                        Bugs.Add(new CompilingBugs(BugCode.lexico, "This a error"));
+                    {
+                      Bugs.Add(new CompilingBugs(BugCode.lexico,"this string  \""+ value+"\"  is invalid token"));
+                    } 
                     tokens.Add(new Token(TokenType.Number, value));
                     continue;
                 }
@@ -73,14 +75,6 @@ public class Lexer
     }
      private bool MatchSymbol(TokenReader reader, List<Token> tokens)
     {
-        foreach (var op in GeneralOperator)
-        {
-            if (reader.Match(op))
-            {
-                tokens.Add(new Token(TokenType.GeneralSymbol, op));
-                return true;
-            }
-        }
         foreach (var op in LogicOperator)
         {
             if (reader.Match(op))
@@ -89,6 +83,15 @@ public class Lexer
                 return true;
             }
         }
+        foreach (var op in GeneralOperator)
+        {
+            if (reader.Match(op))
+            {
+                tokens.Add(new Token(TokenType.GeneralSymbol, op));
+                return true;
+            }
+        }
+        
         foreach (var op in NumericOperator)
         {
             if (reader.Match(op))
@@ -107,7 +110,7 @@ public class Lexer
             if (reader.Match("\""))
             {
                 if (!reader.ReadUntil("\"", out text))
-                    Bugs.Add(new CompilingBugs(BugCode.Sintaxis, "\""));
+                    Bugs.Add(new CompilingBugs(BugCode.Sintaxis, "The text is not closed whit (\")"));
                 tokens.Add(new Token(TokenType.Text, text));
                 return true;
             }
@@ -116,13 +119,13 @@ public class Lexer
                 
      List<string> GetGeneralOperator(List<string> Operator)
     {           
-      string[] Operators= {"=",";",",","{","}","(",")"};
+      string[] Operators= {"=>","=",";",",","{","}","(",")"};
       foreach (var Op in Operators) Operator.Add(Op);  
       return Operator;      
     }
      List<string> GetLogicOperator(List<string> Operator)
     {           
-      string[] Operators= {"==","<",">",">=","<=","||","&&"};
+      string[] Operators= {"==","<=",">=",">","<","||","&&"};
       foreach (var Op in Operators) Operator.Add(Op);  
       return Operator;      
     }

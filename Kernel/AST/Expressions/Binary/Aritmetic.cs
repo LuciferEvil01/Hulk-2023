@@ -7,14 +7,18 @@ public class Aritmetic : BinaryExpression
     public override ExpressionType Type {get; set;}
     public override object? Value {get; set;}
 
+    public override Priority Priority { get ; set; }
     public override bool CheckSemantic(GlobalServer GlobalServer, LocalServer LocalServer, List<CompilingBugs> Bugs)
     {
         bool right = Right!.CheckSemantic(GlobalServer, LocalServer, Bugs);
         bool left = Left!.CheckSemantic(GlobalServer, LocalServer, Bugs);
-
-        if (Right.Type != ExpressionType.Number || Left.Type != ExpressionType.Number)
+        bool ValidType(ExpressionType  type) 
         {
-            Bugs.Add(new CompilingBugs(, BugCode.Invalid, "We don't do that here... "));
+          return type == ExpressionType.Number || type == ExpressionType.variable;
+        }
+        if (!ValidType(Right.Type) || !ValidType(Left.Type))
+        {
+            Bugs.Add(new CompilingBugs( BugCode.Sintaxis, "We don't do that here... "));
             Type = ExpressionType.Bug;
             return false;
         }
@@ -22,8 +26,6 @@ public class Aritmetic : BinaryExpression
         Type = ExpressionType.Number;
         return right && left;
     }
-    public override void Evaluate()
-    {
-        throw new NotImplementedException();
-    }
+    public override void Evaluate(GlobalServer globalServer,LocalServer localServer, List<CompilingBugs> Bugs)
+    { }
 }

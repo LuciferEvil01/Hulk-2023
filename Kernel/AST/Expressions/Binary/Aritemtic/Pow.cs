@@ -6,11 +6,17 @@ public class Pow: Aritmetic
 
     public override object? Value {get; set;}
 
-    public override void Evaluate()
+    public override void Evaluate(GlobalServer globalServer,LocalServer localServer, List<CompilingBugs> Bugs)
     {
-        Right!.Evaluate();
-        Left!.Evaluate();
-        Math.Pow((double)Left.Value!,(double)Right.Value!);
+        Right!.Evaluate(globalServer,localServer,Bugs);
+        Left!.Evaluate(globalServer,localServer,Bugs); 
+        if(ValidType(Right.Type) && ValidType(Left.Type))
+        {
+         Value =  Math.Pow((double)Left.Value!,(double)Right.Value!);
+         return;
+        }
+        Bugs.Add(new CompilingBugs(BugCode.semantico," a member of pow operator is not a number")); 
+       
     }
 
     // public override string? ToString()

@@ -1,4 +1,4 @@
-public class GreatorEqual :  LogicSupport
+public class GreatorEqual :  Prioritytype
 {
     public GreatorEqual( ) : base() { }
 
@@ -6,12 +6,19 @@ public class GreatorEqual :  LogicSupport
 
     public override object? Value {get; set;}
 
-    public override void Evaluate()
+    public override void Evaluate(GlobalServer globalServer,LocalServer localServer, List<CompilingBugs> Bugs)
     {
-        Right!.Evaluate();
-        Left!.Evaluate();
+         Right!.Evaluate(globalServer,localServer,Bugs);
+        Left!.Evaluate(globalServer,localServer,Bugs);  
         
-        Value= (double)Right.Value! >= (double)Left.Value!;
+        if(ValidType(Right.Type) && ValidType(Left.Type))
+        {
+          Value= (double)Right.Value! >= (double)Left.Value!;
+          return; 
+        }
+        Bugs.Add(new CompilingBugs(BugCode.semantico," a member of Greater or equal operator is not a number"));
+   
+        
     }
 
     // public override string? ToString()

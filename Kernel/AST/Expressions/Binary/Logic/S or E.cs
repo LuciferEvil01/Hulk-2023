@@ -1,4 +1,4 @@
-public class SmallorEqual :  LogicSupport
+public class SmallorEqual : Prioritytype 
 {
     public SmallorEqual( ) : base() { }
 
@@ -6,12 +6,17 @@ public class SmallorEqual :  LogicSupport
 
     public override object? Value {get; set;}
 
-    public override void Evaluate()
+     public override void Evaluate(GlobalServer globalServer,LocalServer localServer, List<CompilingBugs> Bugs)
     {
-        Right!.Evaluate();
-        Left!.Evaluate();
-        
-        Value= (double)Right.Value! <= (double)Left.Value!;
+         Right!.Evaluate(globalServer,localServer,Bugs);
+        Left!.Evaluate(globalServer,localServer,Bugs);  
+        if(ValidType(Right.Type) && ValidType(Left.Type))
+        {
+         Value= (double)Right.Value! <= (double)Left.Value!;
+         return;
+        }
+        Bugs.Add(new CompilingBugs(BugCode.semantico," a member of Smaller or equal operator is not a number"));
+   
     }
 
     // public override string? ToString()

@@ -1,38 +1,42 @@
 
 public class Function : ASTNode
 {
-    public Function (string id,ASTNode Argument, Object parameter): base ()
+    public Function (string id,ASTNode Argument, string parameter): base ()
     {
         this.Id = id;
         this.Argument= Argument;
         this.parametro=  parameter;
+        Value= "";
     }
 
     public string Id { get; set; }
-    public object parametro {get;set;}
+    public string parametro {get;set;}
     public ASTNode Argument {get; set;}
-
-    // public void Evaluate() => Argument.Evaluate();
+    public override object? Value { get ; set ; }
+    public override void Evaluate(GlobalServer Globalserver, LocalServer Localserver, List<CompilingBugs> Bugs) {}
 
 
     public bool DeclarateFunction (GlobalServer GlobalServer, LocalServer LocalServer, List<CompilingBugs> Bugs)
     {
-        if ( GlobalServer.Function.Keys.Contains(Id)|| GlobalServer.Function.Values.Contains(Argument))
+        var Tuple= new Tuple<string,string>(Id,parametro);
+        if ( GlobalServer.Function.Keys.Contains(Tuple)|| GlobalServer.Function.Values.Contains(Argument))
         {
             Bugs.Add(new CompilingBugs(BugCode.semantico, " Function already defined"));
             return false;
         }
         else
         {
-            GlobalServer.Function.Add(Id,Argument);
+            
+            GlobalServer.Function.Add(Tuple,Argument);
         }
         return true;
     }
 
     public override bool CheckSemantic(GlobalServer GlobalServer, LocalServer LocalServer, List<CompilingBugs> Bugs)
     {
+      bool CheckId = DeclarateFunction(GlobalServer,LocalServer,Bugs); 
       bool CheckArgument = Argument.CheckSemantic(GlobalServer,LocalServer,Bugs);
-      return CheckArgument;
+      return CheckId  && CheckArgument;
  
     }
 

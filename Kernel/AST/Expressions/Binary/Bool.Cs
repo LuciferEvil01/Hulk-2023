@@ -4,6 +4,7 @@ public class Bool : BinaryExpression
     public Bool( ): base() {}
     public override ExpressionType Type {get; set;}
 
+    public override Priority Priority { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public override object? Value {get; set;}
     public override bool CheckSemantic(GlobalServer GlobalServer, LocalServer LocalServer, List<CompilingBugs> Bugs)
     {
@@ -18,6 +19,6 @@ public class Bool : BinaryExpression
         Type= ExpressionType.logic;
         return left && right;
     }
-    public override void Evaluate(){}
+    public override void Evaluate(GlobalServer globalServer,LocalServer localServer, List<CompilingBugs> Bugs){}
 
 }

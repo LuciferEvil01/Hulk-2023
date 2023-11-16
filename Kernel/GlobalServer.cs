@@ -3,9 +3,9 @@
  {
    public GlobalServer ()
   {
-   Function = new Dictionary<string, ASTNode>();
+   Function = new Dictionary<Tuple<string,string>, ASTNode>();
   }
  
-    public Dictionary< string,ASTNode> Function{get; set;}
+    public Dictionary< Tuple<string,string>,ASTNode> Function{get; set;}
  } 
 

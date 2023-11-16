@@ -1,11 +1,12 @@
 
 public class Text : AtomExpression
 {
-    public Text(string value,  ) : base()
+    public Text(string value ) : base()
     {
         Value = value;
+        
     }
-
+  
     public override ExpressionType Type
     {
         get

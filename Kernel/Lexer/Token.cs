@@ -51,6 +51,7 @@ public class TokenValues
 
 
     public const string Assign = "="; // =
+    public const string FunctionAssign = "=>"; // =>
     public const string ValueSeparator = ","; // ,
     public const string StatementSeparator = ";"; // ;
 

@@ -1,11 +1,17 @@
 
-public abstract class BinaryExpression : Expression
+ public abstract class BinaryExpression : Expression
 {
-    public BinaryExpression( ) : base(){}
+    public BinaryExpression( ) : base()
+    {
+    }
 
     public Expression? Left { get; set; }
 
     public Expression? Right { get; set; }
-
+    public bool ValidType (ExpressionType type)
+    {
+        return type== ExpressionType.Number;
+    }
+   
    
 }
