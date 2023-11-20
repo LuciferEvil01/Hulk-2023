@@ -41,11 +41,9 @@
       Console.ForegroundColor = ConsoleColor.DarkRed;
       Console.Write("> ");
       Console.ForegroundColor = ConsoleColor.White;
-      // string code = Console.ReadLine()!;
-      Console.WriteLine("desea usar las palabras reservadas sen ,cos, log");
+    
        
       string code = Console.ReadLine()!;
-      if (code== "si") dataBase.completeFunction(globalServer);
       if (code == "exit") break;
       if (code == "clear")
       

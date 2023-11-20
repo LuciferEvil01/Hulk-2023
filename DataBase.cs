@@ -7,7 +7,8 @@ public class DataBase
    void Data(GlobalServer globalServer)
    {
      List<Tuple<string,List<string>>>Function = Function1();
-     for (int i = 0; i < Function.Count; i++) {globalServer.Function.Add(Function[i],null!);}
+     List<Expression> expressions = Expressions();
+     for (int i = 0; i < Function.Count; i++) {globalServer.Function.Add(Function[i],expressions[i]);}
    }
    List<Tuple<string,List<string>>> Function1()
    {
@@ -30,35 +31,15 @@ public class DataBase
    }
    List<Expression> Expressions ()
    {
-      List<Expression> expressionss = new List<Expression>();
-     
-      Console.ForegroundColor = ConsoleColor.DarkRed;
-      Console.WriteLine("Define el angulo del seno");
-      Console.ForegroundColor = ConsoleColor.White;
-      double x= double.Parse(Console.ReadLine()!);
-    
-      Console.ForegroundColor = ConsoleColor.DarkRed;
-      Console.WriteLine("Define el angulo del coseno");
-      Console.ForegroundColor = ConsoleColor.White;
-      double y=double.Parse(Console.ReadLine()!);
       
-      Console.ForegroundColor = ConsoleColor.DarkRed;
-      Console.WriteLine("Define el Argumento del Logaritmo");
-      Console.ForegroundColor = ConsoleColor.White;
-      double z=double.Parse(Console.ReadLine()!);
-      
-      Console.ForegroundColor = ConsoleColor.DarkRed;
-      Console.WriteLine("Define la Base del logaritmo");
-      Console.ForegroundColor = ConsoleColor.White;
-      double w= double.Parse(Console.ReadLine()!);
-
-      Expression expression = new Number( Math.Sin(x));
-      Expression expression1= new Number( Math.Cos(y));
-      Expression expression2= new Number (Math.Log(z,w));
-      expressionss.Add(expression);
-      expressionss.Add(expression1);
-      expressionss.Add(expression2);
-      return expressionss;
+      List<Expression> expressions= new List<Expression>();
+      Expression expression = new Sen("x");
+      Expression expression1= new Cos("x");
+      Expression expression2= new Log("x","y");
+      expressions.Add(expression);
+      expressions.Add(expression1);
+      expressions.Add(expression2);
+      return expressions;
    }
     
 
