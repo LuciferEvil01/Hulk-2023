@@ -1,38 +1,51 @@
+using System.Runtime.CompilerServices;
+
 public class VFunction: AtomExpression
 
 {
     // variable Funcional 
-    public VFunction(string id ,Expression parameter) : base()
+    public VFunction(string id ,List<Expression> parameter) : base()
     {
        this.id= id;
        this.parameter= parameter;
        Type= ExpressionType.variable;
+          
     }
-
-    public override ExpressionType Type { get ; set ; } // tipo de expression
     public override object? Value { get ; set;}// valor de la variable 
     public string id{get;set;} // nombre de la variable
-    public Expression parameter {get; set;} // valor del parametro 
+    
+    public List<Expression> parameter {get; set;} // valor del parametro 
     public override void Evaluate(GlobalServer globalServer,LocalServer localServer, List<CompilingBugs> Bugs) 
     { 
         // metodo que se encarga de definirle un valor a la variable 
-        if(localServer!=null!)
+        if(localServer.Node>1000) Bugs.Add( new CompilingBugs(BugCode.compilacion,"stackOverFlow "));
+        
+        if(localServer!=null! && globalServer!= null && Bugs.Count==0 )
         {
             foreach (var item in globalServer.Function)// revisa todas las funciones declaradas anteriormente
           {
-            if(item.Key.Item1==id)// ejecuta una accion solo si la variable esta declarada
+            if(item.Key.Item1==id && item.Key.Item2.Count== parameter.Count)// ejecuta una accion solo si la variable esta declarada
             {   
-              var variable= new Tuple<string,Expression>(item.Key.Item2,parameter); // crea una nueva variable
-              localServer.Variable= variable;// define el id como el parametro de la funcion y su expression 
-              var Argument= item.Value; // como el argumento de la funcion y despues lo evalua.
-              Argument.Evaluate(globalServer,localServer.CreateChild(),Bugs);
-              Value= Argument.Value; // toma el valor de la expression como propia
-              Type= ExpressionType.Number;// define esta variable de tipo numero
+             for (int i = 0; i < item.Key.Item2.Count; i++)
+              { 
+                if(localServer.Variable.ContainsKey(item.Key.Item2[i])) 
+                localServer.Variable[item.Key.Item2[i]]= parameter[i];
+                else localServer.Variable.Add(item.Key.Item2[i],parameter[i]);
+              }     
+           
+               var Argument = item.Value;
+               Argument.Evaluate(globalServer,localServer.CreateChild(),Bugs);
+               Value=Argument.Value; // toma el valor de la expression como propia
+               
+               if(localServer.value.ContainsKey(RayId)) RayId++;
+               if(Bugs.Count==0)localServer.value.Add(RayId,(double)Value!);
+            
+            Type= ExpressionType.Number;// define esta variable de tipo numero
               return;
             }
           }
         }
-        Bugs.Add( new CompilingBugs(BugCode.semantico," this variable "+ id+" is not declarate"));
+        Bugs.Add( new CompilingBugs(BugCode.semantico," this variable "+ id+" is not  valid "));
         Type= ExpressionType.Bug;
         // en caso de nunca encontrar una coinciencia dentro del ciclo adiciona un nuevo error a la lista de 
         // errores 

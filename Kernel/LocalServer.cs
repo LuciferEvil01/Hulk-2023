@@ -2,11 +2,14 @@
 {
      public LocalServer()
     {
-     Variable= new Tuple<string,Expression>(null!,null!);
+     Variable= new Dictionary<string, Expression>();
      Node= 0;
+     value= new Dictionary<double, double>();
     }
 
-    public  Tuple<string,Expression> Variable; 
+    public  Dictionary<string,Expression> Variable;
+    public Dictionary<double,double> value;
+   
     public LocalServer? Parent { get; set; }
     public int Node{get; set;}
 

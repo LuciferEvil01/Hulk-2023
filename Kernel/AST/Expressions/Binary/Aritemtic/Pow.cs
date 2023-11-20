@@ -2,7 +2,7 @@ public class Pow: Aritmetic
 {
     public Pow( ) : base(){}
 
-    public override ExpressionType Type {get; set;}
+    
 
     public override object? Value {get; set;}
 

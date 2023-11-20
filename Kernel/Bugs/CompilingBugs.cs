@@ -17,4 +17,5 @@ public enum BugCode
     lexico,
     Sintaxis,
     semantico,
+    compilacion,
 }

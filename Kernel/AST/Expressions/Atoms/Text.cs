@@ -4,17 +4,11 @@ public class Text : AtomExpression
     public Text(string value ) : base()
     {
         Value = value;
+        Type = ExpressionType.Text;
         
     }
   
-    public override ExpressionType Type
-    {
-        get
-        {
-            return ExpressionType.Text;
-        }
-        set { }
-    }
+   
 
     public override object? Value { get; set; }
 }

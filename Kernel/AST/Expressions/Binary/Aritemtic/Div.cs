@@ -7,7 +7,7 @@ public class Div : Aritmetic
        
      }
 
-    public override ExpressionType Type {get; set;}
+    
     
     public override object? Value {get; set;}
 
@@ -23,7 +23,7 @@ public class Div : Aritmetic
         }
         Bugs.Add(new CompilingBugs(BugCode.semantico," a member of div operator is not a number"));
     }
-    public override Priority Priority { get ; set ; }
+  
 
     public override string? ToString()
     {

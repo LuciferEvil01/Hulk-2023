@@ -12,6 +12,12 @@
     {
         return type== ExpressionType.Number;
     }
+    public bool EqualValue (LocalServer localServer,Expression expression)
+    {
+       if(localServer.value.Count==0) return true;
+       if((double)expression.Value! == localServer.value[expression.RayId]  )  return true;
+       else return false ;
+    }
    
    
 }

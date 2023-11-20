@@ -17,6 +17,28 @@ public class Parse
 
             switch(stream.LookAhead(tokens).Value)
             {
+                case "Function": 
+                {
+                  var tokens1= ListCreator(tokens,stream,words);
+                  return ParserFunction(bugs,tokens1);
+                }  
+                default :        
+                 
+                   return ParserGeneralExpression(bugs,tokens);
+                  }   
+        
+
+    }
+     Expression ParserGeneralExpression(List<CompilingBugs> bugs,List<Token> tokens)
+    {   TokenStream stream = new TokenStream(tokens);
+         
+         stream.MoveNext(1); 
+        
+         var words= end(stream,tokens);
+
+
+            switch(stream.LookAhead(tokens).Value)
+            {
                 case "Print": 
                 {
                   var tokens1= ListCreator(tokens,stream,words); 
@@ -31,19 +53,15 @@ public class Parse
                 {
                   var tokens1= ListCreator(tokens,stream,words);  
                   return ParserLet(bugs,tokens1);
-                }
-                case "Function": 
-                {
-                  var tokens1= ListCreator(tokens,stream,words);
-                  return ParserFunction(bugs,tokens1);
                 }  
                 default :        
                  stream.MoveBack(1);
                  return ParserExpression(bugs,tokens); 
             }   
         
+        
     }
-    public Function ParserFunction(List<CompilingBugs> bugs,List<Token> tokens)
+    Function ParserFunction(List<CompilingBugs> bugs,List<Token> tokens)
     {
        TokenStream stream= new TokenStream(tokens);
       string variable;
@@ -60,14 +78,18 @@ public class Parse
          bugs.Add(new CompilingBugs(BugCode.Sintaxis," the open bracket is missing after " + variable));
          stream.MoveNext(1);
       }
-       string parameter;
-      if(!stream.Next(TokenType.Variable,tokens))
-      {
-         parameter= "";
-         bugs.Add(new CompilingBugs(BugCode.Sintaxis,"This token"+stream.LookAhead(tokens).Value +" is not a parameter"));
-         stream.MoveNext(1);
-      }
-      else {parameter= stream.LookAhead(tokens).Value;}
+       List<string> parameter = new List<string>();
+       Parameter();
+      void Parameter()
+      {  
+        if(!stream.Next(TokenType.Variable,tokens))
+        {
+          bugs.Add(new CompilingBugs(BugCode.Sintaxis,"This token"+stream.LookAhead(tokens).Value +" is not a parameter"));
+          stream.MoveNext(1);
+        }
+        else {parameter.Add(stream.LookAhead(tokens).Value);}
+        if(stream.Next(",",tokens)) Parameter();
+        }
       if(!stream.Next(")",tokens))
       {
          bugs.Add(new CompilingBugs(BugCode.Sintaxis," the  closed bracket is missing after " + parameter));
@@ -84,12 +106,12 @@ public class Parse
       }
       
       List<Token> tokens1 = ListCreator(tokens,stream,";");
-      ASTNode Argument= Parser(bugs,tokens1);
+      Expression Argument= ParserGeneralExpression(bugs,tokens1);
       Function function= new Function(variable,Argument,parameter);
       return function;
       
     }
-    public ASTNode ParserIf(List<CompilingBugs> bugs,List<Token> tokens)
+    Expression ParserIf(List<CompilingBugs> bugs,List<Token> tokens)
     {
       
         TokenStream stream = new TokenStream(tokens);
@@ -113,15 +135,15 @@ public class Parse
           var BugsNode = new BugsNode();
           return BugsNode;
         }
-        var Argument1= Parser(bugs,tokens2);
+        var Argument1= ParserGeneralExpression(bugs,tokens2);
         var Words = end(stream,tokens);
         List<Token> tokens3= ListCreator(tokens,stream,Words);
-        var Argument2= Parser(bugs,tokens3);
+        var Argument2= ParserGeneralExpression(bugs,tokens3);
         var IF =  new If(Expression,Argument1,Argument2);
 
         return IF;
     }
-    ASTNode ParserPrint( List<CompilingBugs> bugs,List<Token> tokens)
+    Expression ParserPrint( List<CompilingBugs> bugs,List<Token> tokens)
     {
        TokenStream stream = new TokenStream(tokens);
        if(!stream.Next("(",tokens))
@@ -140,16 +162,16 @@ public class Parse
          var BugsNode = new BugsNode();
          return BugsNode;
        }
-       var Argument= Parser(bugs,tokens1);
+       var Argument= ParserGeneralExpression(bugs,tokens1);
        Print print= new Print(Argument);  
        return print;
     }
-      ASTNode ParserLet( List<CompilingBugs> bugs,List<Token> tokens)
+      Expression ParserLet( List<CompilingBugs> bugs,List<Token> tokens)
     {       
        TokenStream stream= new TokenStream(tokens);
        return Parameters();
        
-      ASTNode Parameters()
+      Expression Parameters()
       { 
          string parameter1;
          Tuple<string,Expression> Variable= new Tuple<string, Expression>(null!,null!);
@@ -222,11 +244,11 @@ public class Parse
            
           }
        } 
-       ASTNode _In ()
+       Expression _In ()
       {   
        var Words= end(stream,tokens);
        List<Token> tokens1= ListCreator(tokens,stream,Words);
-       var Argument = Parser(bugs,tokens1);
+       var Argument = ParserGeneralExpression(bugs,tokens1);
        return Argument;
       }
    }
@@ -452,8 +474,7 @@ public class Parse
     {
        List<Token> tokens1= new List<Token>();
        int Count =0;
-      //  Console.WriteLine("valor inicial : "+ stream.LookAhead(tokens)+"  valor final : "+ end);
-      do
+       do
       { 
        while(stream.LookAhead(tokens).Value != end)
        {
@@ -463,7 +484,6 @@ public class Parse
           if(stream.LookAhead(tokens).Value=="(") Count++;
          }
           if(stream.End) break;
-        //  Console.Write(stream.LookAhead(tokens).Value+"  ");
          stream.MoveNext(1);
        }
 
@@ -474,7 +494,7 @@ public class Parse
         { 
          tokens1.Add(stream.LookAhead(tokens));
          if(stream.End) break;
-        //  Console.Write(stream.LookAhead(tokens).Value+" ");
+
          stream.MoveNext(1);
         }
        }
@@ -482,8 +502,7 @@ public class Parse
        } while (Count!=0); 
 
         tokens1.Add(stream.LookAhead(tokens));
-        //  Console.Write(stream.LookAhead(tokens).Value);
-        //  Console.WriteLine();
+    
 
 
        return tokens1;
@@ -512,11 +531,12 @@ public class Parse
           case "&&": {var Operator = new And()    ; return Operator;}
           case "<=": {var Operator = new SmallorEqual(); return Operator;}
           case ">=": {var Operator = new GreatorEqual(); return Operator;}
-          case "+" : {var Operator = new Add(); return Operator;}
-          case "-" : {var Operator = new Sub(); return Operator;}
-          case "/" : {var Operator = new Div(); return Operator;}
-          case "*" : {var Operator = new Mul(); return Operator;}
-          default  : {var Operator = new Pow(); return Operator;}
+          case "+" : {var Operator = new Add();  return Operator;}
+          case "-" : {var Operator = new Sub();  return Operator;}
+          case "/" : {var Operator = new Div();  return Operator;}
+          case "*" : {var Operator = new Mul();  return Operator;}
+          case "@" : {var Operator = new Merge();return Operator;}
+          default  : {var Operator = new Pow();  return Operator;}
         }
         
       } 
@@ -541,43 +561,71 @@ public class Parse
         if(stream.Next("(",tokens))
         {
           List<Token> tokens1= ListCreator(tokens,stream,")");
-          Expression parameter;
+          List<Expression> parameter = new List<Expression>();
           if(stream.LookAhead(tokens).Value!=")")
           {
             bugs.Add(new CompilingBugs(BugCode.Sintaxis,"the bracked is not closed after variable "+ variable));
-            parameter= new AtomBug();
           }
-          else  parameter= ParserExpression(bugs,tokens1);
+          else  Parameters();
           VFunction vFunction = new VFunction(variable,parameter); 
           return vFunction;
+          void Parameters()
+          {
+             int Start= 0;
+             int end = 0;
+             int totalparameter =0;
+             TokenStream stream1 = new TokenStream(tokens1);
+             while (true)
+             {
+               stream1.MoveNext(1);
+               if(stream1.LookAhead(tokens1).Value==",") 
+               {
+                 totalparameter++;
+                 Start= end;
+                 var stream2= new  TokenStream(tokens1);
+                 while (stream2.Position!=Start)
+                 {
+                   stream2.MoveNext(1);
+                 }
+                 List<Token> tokens2= ListCreator(tokens1,stream2,",");
+                 var expression = ParserExpression(bugs,tokens2);
+                 parameter.Add(expression);
+                 end= stream1.Position;  
+               }
+               if(stream1.LookAhead(tokens1).Value==")")
+               {
+                  if(totalparameter==0) 
+                  {
+                    var expression1 = ParserExpression(bugs,tokens1);
+                    parameter.Add(expression1);
+                    break;
+                  }
+                  
+                  Start= end;
+                  var stream2= new  TokenStream(tokens1);
+                  while (stream2.Position!=Start)
+                  {
+                    stream2.MoveNext(1);
+                  }
+                  List<Token> tokens2= ListCreator(tokens1,stream2,")");
+                  var expression = ParserExpression(bugs,tokens2);
+                  parameter.Add(expression);
+                  end= stream1.Position;  
+                  break;
+                }
+
+
+             }
+          }
         }
         else 
         {
           Variable variable1= new Variable(variable); 
 
           return variable1;
-        }       
+        }   
+            
       }
-    //  public Expression ParserExpression(List<CompilingBugs> bugs,List<Token> tokens)
-    //  {
-      
-    //   Stack<Expression> stack = new Stack<Expression>();
-    //   Stack<Expression> Operator = new Stack<Expression>();
-    //   TokenStream stream = new TokenStream(tokens);
-
-    //   if(stream.Next(TokenType.Number,tokens) || stream.Next(TokenType.Variable,tokens))
-    //   {
-    //    Expression number = stream.LookAhead(tokens).Type==TokenType.Number ? new Number(double.Parse(stream.LookAhead(tokens).Value)) : new Variable(stream.LookAhead(tokens).Value);
-    //    stack.Push(number);
-    //   }
-    //   else if(stream.Next(TokenType.numericSymbol,tokens) || stream.Next(TokenType.logicSymbol ,tokens))
-    //   {
-    //     Expression Oper = GetOperator(bugs,stream);
-    //     stack.Push(Oper);
-    //   }
-
-    //   return;
-    //  }
-
+  
 
 } 

@@ -8,11 +8,7 @@ public class Variable: AtomExpression
 
     }
      
-     public override ExpressionType Type 
-    {
-     get ;
-     set ; 
-    }
+     
     public override object? Value { get ; set;}
     public string id{get;set;}
     public override void Evaluate(GlobalServer globalServer,LocalServer localServer, List<CompilingBugs> Bugs)
@@ -23,7 +19,6 @@ public class Variable: AtomExpression
           
           expression.Evaluate(globalServer,localServer.Parent!,Bugs);
           Value = expression.Value;
-          Console.WriteLine(Value);
           Type  = expression.Type;
         } 
         
@@ -33,11 +28,10 @@ public class Variable: AtomExpression
           {
             if(localServer.Node>0)
             { 
-              
-              if(localServer.Variable.Item1==id) return localServer.Variable.Item2;
+              foreach (var item in localServer.Variable) {if(item.Key==id) return item.Value; }
               return searchVariable(localServer.Parent!);
             }
-            if(localServer.Variable.Item1==id) return localServer.Variable.Item2;
+             foreach (var item in localServer.Variable) {if(item.Key==id) return item.Value; }
           }
           Bugs.Add(new CompilingBugs(BugCode.semantico," this variable "+id+" is not declarate in the scope"));    
           Type= ExpressionType.Bug;

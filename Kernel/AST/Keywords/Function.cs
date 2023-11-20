@@ -1,7 +1,7 @@
 
 public class Function : ASTNode
 {
-    public Function (string id,ASTNode Argument, string parameter): base ()
+    public Function (string id,Expression Argument, List<string> parameter): base ()
     {
         this.Id = id;
         this.Argument= Argument;
@@ -10,15 +10,15 @@ public class Function : ASTNode
     }
 
     public string Id { get; set; }
-    public string parametro {get;set;}
-    public ASTNode Argument {get; set;}
+    public List<string> parametro {get;set;}
+    public Expression Argument {get; set;}
     public override object? Value { get ; set ; }
     public override void Evaluate(GlobalServer Globalserver, LocalServer Localserver, List<CompilingBugs> Bugs) {}
 
 
     public bool DeclarateFunction (GlobalServer GlobalServer, LocalServer LocalServer, List<CompilingBugs> Bugs)
     {
-        var Tuple= new Tuple<string,string>(Id,parametro);
+        var Tuple= new Tuple<string,List<string>>(Id,parametro);
         if ( GlobalServer.Function.Keys.Contains(Tuple)|| GlobalServer.Function.Values.Contains(Argument))
         {
             Bugs.Add(new CompilingBugs(BugCode.semantico, " Function already defined"));

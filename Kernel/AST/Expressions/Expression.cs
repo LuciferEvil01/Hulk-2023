@@ -1,12 +1,22 @@
 
-public abstract class Expression : ASTNode
+
+public class Expression : ASTNode
 {
     public Expression( ) : base () { }
 
-    public abstract ExpressionType Type { get; set; }
- 
-    
-    public abstract Priority Priority {get; set;}
+    public ExpressionType Type { get; set; }
+    public double RayId =0;
+    public override void Evaluate(GlobalServer GlobalServer, LocalServer LocalServer, List<CompilingBugs> Bugs)
+    {
+        throw new NotImplementedException();
+    }
+    public override bool CheckSemantic(GlobalServer GlobalServer, LocalServer LocalServer, List<CompilingBugs> Bugs)
+    {
+        throw new NotImplementedException();
+    }
+    public override object? Value { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public Priority Priority {get; set;}
    
      public bool ComparatePriority(Priority priority)
     {

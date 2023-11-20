@@ -7,7 +7,7 @@ public class Mul :Aritmetic
      
      }
    
-    public override ExpressionType Type {get; set;}
+    
 
     public override object? Value {get; set;}
 
@@ -25,7 +25,7 @@ public class Mul :Aritmetic
     }
 
      
-    public override Priority Priority { get ; set ; }
+  
     public override string? ToString()
     {
         if (Value == null)

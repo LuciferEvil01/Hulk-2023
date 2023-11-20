@@ -3,19 +3,13 @@ public class Number : AtomExpression
 {
     public Number(double value) : base()
     {
-        Value = value;
+        this.value = value;
+        Type = ExpressionType.Number;
+        
     }
-
-    public override ExpressionType Type
-    {
-        get
-        {
-            return ExpressionType.Number;
-        }
-        set { }
-    }
-
-    public override object? Value { get; set; }
+     double value ;
+    
+    public override object? Value { get{ return value;}  }
 
     public bool IsInt
     {

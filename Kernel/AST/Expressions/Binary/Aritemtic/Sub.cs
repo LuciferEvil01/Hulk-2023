@@ -7,7 +7,7 @@ public class Sub : Aritmetic
         
       }
 
-    public override ExpressionType Type {get; set;}
+    
 
 
     public override object? Value {get; set;}
@@ -24,7 +24,7 @@ public class Sub : Aritmetic
         Bugs.Add(new CompilingBugs(BugCode.semantico," a member of sub operator is not a number"));
      
     }
-    public override Priority Priority { get ; set; }
+   
     public override string? ToString()
     {
         if (Value == null)

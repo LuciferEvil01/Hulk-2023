@@ -131,14 +131,14 @@ public class Lexer
     }
      List<string> GetNumericOperator(List<string> Operator)
     {           
-      string[] Operators= {"+","*","-","/","^","cos","sen","log","PI"};
+      string[] Operators= {"+","*","-","/","^","@"};
       foreach (var Op in Operators) Operator.Add(Op);  
       return Operator;      
     }
 
     List<string> GetKeyWords(List<string> KeyWord)
     {
-        string[] KeyWords={"Print","Function","Let","in","if","else"};
+        string[] KeyWords={"Print","Function","let","in","if","else"};
         foreach (var key in KeyWords) KeyWord.Add(key); 
         return KeyWord;
     }          

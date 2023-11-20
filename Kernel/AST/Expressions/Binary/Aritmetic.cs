@@ -4,10 +4,8 @@ public class Aritmetic : BinaryExpression
     {
      
     }
-    public override ExpressionType Type {get; set;}
+ 
     public override object? Value {get; set;}
-
-    public override Priority Priority { get ; set; }
     public override bool CheckSemantic(GlobalServer GlobalServer, LocalServer LocalServer, List<CompilingBugs> Bugs)
     {
         bool right = Right!.CheckSemantic(GlobalServer, LocalServer, Bugs);

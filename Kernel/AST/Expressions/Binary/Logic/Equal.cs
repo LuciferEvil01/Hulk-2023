@@ -5,19 +5,18 @@ public class Equal :  Bool
         Priority= Priority.Priority3;
      }
 
-    public override ExpressionType Type {get; set;}
+    
 
     public override object? Value {get; set;}
 
      public override void Evaluate(GlobalServer globalServer,LocalServer localServer, List<CompilingBugs> Bugs)
-    {
-         Right!.Evaluate(globalServer,localServer,Bugs);
+    {    
         Left!.Evaluate(globalServer,localServer,Bugs);  
-        
-        Value = Right.Value! == Left.Value!;
+        Right!.Evaluate(globalServer,localServer,Bugs); 
+        Value =  Left.Value! == Right.Value! ;
     
     }
-    public override Priority Priority { get ; set ; }
+  
 
     // public override string? ToString()
     // {

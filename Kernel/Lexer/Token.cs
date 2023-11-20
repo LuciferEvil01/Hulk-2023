@@ -35,10 +35,7 @@ public class TokenValues
     public const string Mul = "*"; // *
     public const string Div = "/"; // /
     public const string Pow = "^"; // ^
-    public const string sen = "sen"; // sen
-    public const string cos = "cos"; // cos
-    public const string log = "log"; // log
-    public const string PI = "PI"; // PI (180°)
+    public const string Merge= "@";
 
 
     public const string Greater = ">";
