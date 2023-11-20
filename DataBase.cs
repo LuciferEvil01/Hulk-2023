@@ -7,9 +7,7 @@ public class DataBase
    void Data(GlobalServer globalServer)
    {
      List<Tuple<string,List<string>>>Function = Function1();
-     List<Expression> Argument= Expressions();
-     for (int i = 0; i < Function.Count; i++) {globalServer.Function.Add(Function[i],Argument[i]);}
-     
+     for (int i = 0; i < Function.Count; i++) {globalServer.Function.Add(Function[i],null!);}
    }
    List<Tuple<string,List<string>>> Function1()
    {
@@ -23,17 +21,40 @@ public class DataBase
       tuples.Add(tuple2);
       return tuples; 
    }
+   public void completeFunction(GlobalServer globalServer)
+   {
+      List<Tuple<string,List<string>>>Function = Function1();
+     List<Expression> Argument= Expressions();
+     for (int i = 0; i < Function.Count; i++) {globalServer.Function[Function[i]]= Argument[i];}
+   
+   }
    List<Expression> Expressions ()
    {
       List<Expression> expressionss = new List<Expression>();
-      double x = 0;
-      Variable variable = new Variable("x");
-      variable.Value=x;
-      Variable variable1 = new Variable("y");
-      variable1.Value=x;
-      Expression expression = new Number( Math.Sin((double)variable.Value!));
-      Expression expression1= new Number( Math.Cos((double)variable.Value!));
-      Expression expression2= new Number (Math.Log((double)variable.Value!,(double)variable1.Value!));
+     
+      Console.ForegroundColor = ConsoleColor.DarkRed;
+      Console.WriteLine("Define el angulo del seno");
+      Console.ForegroundColor = ConsoleColor.White;
+      double x= double.Parse(Console.ReadLine()!);
+    
+      Console.ForegroundColor = ConsoleColor.DarkRed;
+      Console.WriteLine("Define el angulo del coseno");
+      Console.ForegroundColor = ConsoleColor.White;
+      double y=double.Parse(Console.ReadLine()!);
+      
+      Console.ForegroundColor = ConsoleColor.DarkRed;
+      Console.WriteLine("Define el Argumento del Logaritmo");
+      Console.ForegroundColor = ConsoleColor.White;
+      double z=double.Parse(Console.ReadLine()!);
+      
+      Console.ForegroundColor = ConsoleColor.DarkRed;
+      Console.WriteLine("Define la Base del logaritmo");
+      Console.ForegroundColor = ConsoleColor.White;
+      double w= double.Parse(Console.ReadLine()!);
+
+      Expression expression = new Number( Math.Sin(x));
+      Expression expression1= new Number( Math.Cos(y));
+      Expression expression2= new Number (Math.Log(z,w));
       expressionss.Add(expression);
       expressionss.Add(expression1);
       expressionss.Add(expression2);

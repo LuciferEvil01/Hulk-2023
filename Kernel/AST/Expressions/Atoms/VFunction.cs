@@ -36,7 +36,7 @@ public class VFunction: AtomExpression
                var Argument = item.Value;
                Argument.Evaluate(globalServer,localServer.CreateChild(),Bugs);
                Value=Argument.Value; // toma el valor de la expression como propia
-               
+                
                if(localServer.value.ContainsKey(RayId)) RayId++;
                if(Bugs.Count==0)localServer.value.Add(RayId,(double)Value!);
             
