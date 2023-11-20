@@ -1,0 +1,8 @@
+class RayId
+{
+   RayId()
+   {
+
+   }
+   
+}
